@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login + Landing + Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+html { font-size: 62.5%; }
+body { 
+    margin: 0;
+    background: linear-gradient(45deg, #1a1a1a, #2e2e2e);
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+}
+
+/* GENERIC */
+.hidden { display: none; }
+
+/* LOGIN PAGE */
+#login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.login-box {
+    background: rgba(255,255,255,0.05);
+    padding: 3rem;
+    border-radius: 1rem;
+    width: 30rem;
+    text-align: center;
+}
+
+.login-box input {
+    width: 90%;
+    padding: 1rem;
+    margin: 1rem 0;
+    border: none;
+    border-radius: .5rem;
+}
+
+.login-box button {
+    padding: 1rem 2rem;
+    border: none;
+    background: #888;
+    color: white;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+/* LANDING PAGE */
+#landing-page { display: none; }
+
+.landing-page-container {
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.content__wrapper {
+    max-width: 1200px;
+    width: 90%;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.header {
+    width: 100%;
+    height: 2rem;
+    padding: 4.5rem 0;
+}
+
+.menu-icon {
+    width: 2.5rem;
+    height: 1.5rem;
+    display: inline-block;
+}
+
+.menu-icon__line {
+    width: 1.5rem;
+    height: 0.2rem;
+    background-color: #888;
+    display: block;
+    position: relative;
+}
+
+.menu-icon__line::before,
+.menu-icon__line::after {
+    content: '';
+    width: 1.5rem;
+    height: 0.2rem;
+    background-color: #888;
+    position: absolute;
+}
+
+.menu-icon__line::before { top: -0.6rem; }
+.menu-icon__line::after { top: 0.6rem; }
+
+.ellipses-container {
+    width: 50rem;
+    height: 50rem;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    top: 5rem;
+}
+
+.ellipses {
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    border-style: solid;
+}
+
+.ellipses__outer--thin {
+    width: 100%;
+    height: 100%;
+    border-width: 1px;
+    border-color: rgba(255,255,255,0.1);
+    animation: ellipsesOrbit 15s ease-in-out infinite;
+}
+
+.ellipses__outer--thick {
+    width: 99.5%;
+    height: 99.5%;
+    border-color: #888 transparent;
+    border-width: 2px;
+    transform: rotate(-45deg);
+    animation: ellipsesRotate 15s ease-in-out infinite;
+}
+
+.ellipses__orbit {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-width: 2px;
+    border-color: #888;
+    top: 5rem;
+    right: 6.75rem;
+}
+
+.ellipses__orbit::before {
+    content: '';
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background-color: #888;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes ellipsesRotate {
+    0% { transform: rotate(-45deg); }
+    100% { transform: rotate(-405deg); }
+}
+
+@keyframes ellipsesOrbit {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+}
+
+/* CREDENTIAL DISPLAY */
+#credentials-box {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 1.8rem;
+}
+
+#history-btn {
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    background: #555;
+    border: none;
+    color: white;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+/* HISTORY POPUP */
+#history-popup {
+    display: none;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40rem;
+    background: rgba(0,0,0,0.9);
+    padding: 2rem;
+    border-radius: 1rem;
+    z-index: 10;
+}
+
+#history-popup ul {
+    list-style: none;
+    padding: 0;
+    max-height: 25rem;
+    overflow-y: auto;
+}
+
+#history-popup li {
+    padding: .5rem 0;
+    border-bottom: 1px solid #444;
+}
+
+#close-history {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #444;
+    border: none;
+    color: white;
+    width: 100%;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+/* ADMIN PAGE */
+#admin-page {
+    display: none;
+    padding: 2rem;
+}
+
+.admin-section {
+    margin-bottom: 3rem;
+    background: rgba(255,255,255,0.03);
+    padding: 1.5rem;
+    border-radius: 1rem;
+}
+
+.admin-section h2 {
+    margin-top: 0;
+}
+
+.admin-section input {
+    padding: .7rem;
+    margin: .3rem;
+    border-radius: .4rem;
+    border: none;
+}
+
+.admin-section button {
+    padding: .7rem 1.5rem;
+    border: none;
+    border-radius: .4rem;
+    background: #777;
+    color: white;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.2rem;
+}
+
+th, td {
+    border-bottom: 1px solid #444;
+    padding: .5rem;
+    text-align: left;
+}
+
+th {
+    background: rgba(255,255,255,0.05);
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="login-page">
+    <div class="login-box">
+        <h2>Login</h2>
+        <input id="login-user" placeholder="Username">
+        <input id="login-pass" placeholder="Password" type="password">
+        <button onclick="handleLogin()">Login</button>
+        <p style="font-size:1.1rem;opacity:0.6;margin-top:1rem;">
+            (Normal users log in here. Special combo opens admin.)
+        </p>
+    </div>
+</div>
+
+<!-- LANDING PAGE -->
+<div id="landing-page">
+    <div class="landing-page-container">
+        <div class="content__wrapper">
+
+            <header class="header">
+                <div class="menu-icon">
+                    <span class="menu-icon__line"></span>
+                </div>
+            </header>
+
+            <div class="ellipses-container">
+                <div class="ellipses ellipses__outer--thin">
+                    <div class="ellipses ellipses__orbit"></div>
+                </div>
+                <div class="ellipses ellipses__outer--thick"></div>
+            </div>
+
+            <div id="credentials-box"></div>
+            <button id="history-btn" onclick="showHistory()">View Past Usernames</button>
+
+        </div>
+    </div>
+</div>
+
+<!-- ADMIN PAGE -->
+<div id="admin-page">
+    <h1>Admin Dashboard</h1>
+
+    <div class="admin-section">
+        <h2>Manage Users</h2>
+        <div>
+            <input id="new-username" placeholder="New username">
+            <input id="new-password" placeholder="New password" type="text">
+            <button onclick="addUser()">Add User</button>
+        </div>
+        <table id="users-table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="admin-section">
+        <h2>Login Logs</h2>
+        <table id="logs-table">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Date & Time</th>
+                    <th>Browser Info</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <button onclick="logout()" style="margin-top:1rem;">Logout</button>
+</div>
+
+<!-- HISTORY POPUP -->
+<div id="history-popup">
+    <h3>Past Daily Credentials</h3>
+    <ul id="history-list"></ul>
+    <button id="close-history" onclick="closeHistory()">Close</button>
+</div>
+
+<script>
+// CONSTANTS
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "Waheguru@1984";
+
+// INITIAL SETUP WITH DEFAULT USER
+function init() {
+    let users = JSON.parse(localStorage.getItem("users"));
+
+    if (!users || !Array.isArray(users)) {
+        users = [];
+    }
+
+    // Add default user if not already present
+    if (!users.some(u => u.username.toLowerCase() === "ceo")) {
+        users.push({ username: "ceo", password: "Meharveer@21" });
+    }
+
+    localStorage.setItem("users", JSON.stringify(users));
+
+    if (!localStorage.getItem("loginLogs")) {
+        localStorage.setItem("loginLogs", JSON.stringify([]));
+    }
+}
+init();
+
+// LOGIN HANDLER (FIXED)
+function handleLogin() {
+    const u = document.getElementById("login-user").value.trim();
+    const p = document.getElementById("login-pass").value;
+
+    // Admin login
+    if (u === ADMIN_USER && p === ADMIN_PASS) {
+        showAdminPage();
+        return;
+    }
+
+    // Normal users
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    const match = users.find(user => 
+        user.username.trim().toLowerCase() === u.toLowerCase() &&
+        user.password === p
+    );
+
+    if (match) {
+        logLogin(u);
+        showLandingPage();
+    } else {
+        alert("Invalid username or password");
+    }
+}
+
+// LOG LOGIN
+function logLogin(username) {
+    const logs = JSON.parse(localStorage.getItem("loginLogs")) || [];
+    const now = new Date();
+    logs.push({
+        username,
+        datetime: now.toLocaleString(),
+        userAgent: navigator.userAgent
+    });
+    localStorage.setItem("loginLogs", JSON.stringify(logs));
+}
+
+// SHOW PAGES
+function showLandingPage() {
+    document.getElementById("login-page").style.display = "none";
+    document.getElementById("admin-page").style.display = "none";
+    document.getElementById("landing-page").style.display = "block";
+    generateDailyCredentials();
+}
+
+function showAdminPage() {
+    document.getElementById("login-page").style.display = "none";
+    document.getElementById("landing-page").style.display = "none";
+    document.getElementById("admin-page").style.display = "block";
+    renderUsers();
+    renderLogs();
+}
+
+function logout() {
+    document.getElementById("admin-page").style.display = "none";
+    document.getElementById("landing-page").style.display = "none";
+    document.getElementById("login-page").style.display = "flex";
+}
+
+// RANDOM STRING
+function randomString(len) {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let out = "";
+    for (let i = 0; i < len; i++) out += chars[Math.floor(Math.random() * chars.length)];
+    return out;
+}
+
+// DAILY CREDENTIALS
+function generateDailyCredentials() {
+    const today = new Date().toLocaleDateString();
+    const saved = JSON.parse(localStorage.getItem("dailyCreds")) || {};
+
+    if (!saved[today]) {
+        const username = randomString(6);
+        const password = randomString(8);
+        saved[today] = { username, password };
+        localStorage.setItem("dailyCreds", JSON.stringify(saved));
+    }
+
+    const creds = saved[today];
+    document.getElementById("credentials-box").innerHTML =
+        `<p>Today's Username: <b>${creds.username}</b></p>
+         <p>Today's Password: <b>${creds.password}</b></p>`;
+}
+
+// HISTORY POPUP
+function showHistory() {
+    const saved = JSON.parse(localStorage.getItem("dailyCreds")) || {};
+    const list = document.getElementById("history-list");
+    list.innerHTML = "";
+
+    Object.keys(saved).sort().forEach(date => {
+        const item = document.createElement("li");
+        item.textContent = `${date} → ${saved[date].username} / ${saved[date].password}`;
+        list.appendChild(item);
+    });
+
+    document.getElementById("history-popup").style.display = "block";
+}
+
+function closeHistory() {
+    document.getElementById("history-popup").style.display = "none";
+}
+
+// ADMIN: USERS
+function addUser() {
+    const username = document.getElementById("new-username").value.trim();
+    const password = document.getElementById("new-password").value;
+
+    if (!username || !password) {
+        alert("Enter username and password");
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
+        alert("User already exists");
+        return;
+    }
+
+    users.push({ username, password });
+
+    localStorage.setItem("users", JSON.stringify(users));
+
+    document.getElementById("new-username").value = "";
+    document.getElementById("new-password").value = "";
+
+    renderUsers();
+}
+
+function deleteUser(username) {
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    users = users.filter(u => u.username !== username);
+    localStorage.setItem("users", JSON.stringify(users));
+    renderUsers();
+}
+
+function renderUsers() {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const tbody = document.querySelector("#users-table tbody");
+    tbody.innerHTML = "";
+
+    users.forEach(u => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${u.username}</td>
+            <td>${u.password}</td>
+            <td><button onclick="deleteUser('${u.username}')">Delete</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+// ADMIN: LOGS
+function renderLogs() {
+    const logs = JSON.parse(localStorage.getItem("loginLogs")) || [];
+    const tbody = document.querySelector("#logs-table tbody");
+    tbody.innerHTML = "";
+
+    logs.slice().reverse().forEach(log => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${log.username}</td>
+            <td>${log.datetime}</td>
+            <td>${log.userAgent}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+</script>
+
+</body>
+</html>

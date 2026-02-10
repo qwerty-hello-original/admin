@@ -1,331 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Y</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Lol You Can't Log In</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- PART 2/4 (CSS) WILL GO INSIDE THIS STYLE TAG -->
-  <style>
-  /* PART 2/4: CSS WILL BE PASTED HERE */
-  </style>
-</head>
-<body>
-
-  <!-- ========================= LOGIN SCREEN ========================= -->
-  <div id="login-screen">
-    <div class="login-container">
-      <form class="login-form" onsubmit="return false;">
-        <p>Welcome</p>
-        <input id="login-username" type="text" placeholder="Username"><br>
-        <input id="login-password" type="password" placeholder="Password"><br>
-        <input type="button" value="Sign in" onclick="handleLogin()"><br>
-      </form>
-
-      <div class="drops">
-        <div class="drop drop-1"></div>
-        <div class="drop drop-2"></div>
-        <div class="drop drop-3"></div>
-        <div class="drop drop-4"></div>
-        <div class="drop drop-5"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================= APP WRAPPER ========================= -->
-  <div id="app" class="hidden">
-    <div class="app-container">
-
-      <!-- ========================= SIDEBAR ========================= -->
-      <aside class="sidebar">
-        <div class="logo">
-          <i class="fab fa-apple"></i>
-        </div>
-
-        <nav class="menu">
-          <ul>
-            <li class="active" data-page="home">
-              <a href="javascript:void(0);">
-                <i class="fas fa-home"></i><span>Home</span>
-              </a>
-            </li>
-
-            <li data-page="creds">
-              <a href="javascript:void(0);">
-                <i class="fas fa-key"></i><span>Daily Credentials</span>
-              </a>
-            </li>
-
-            <li data-page="history">
-              <a href="javascript:void(0);">
-                <i class="fas fa-clock-rotate-left"></i><span>History</span>
-              </a>
-            </li>
-
-            <!-- Admin-only items -->
-            <li class="admin-only" data-page="users">
-              <a href="javascript:void(0);">
-                <i class="fas fa-users-cog"></i><span>Manage Users</span>
-              </a>
-            </li>
-
-            <li class="admin-only" data-page="logs">
-              <a href="javascript:void(0);">
-                <i class="fas fa-list"></i><span>Login Logs</span>
-              </a>
-            </li>
-
-            <li class="admin-only" data-page="prompts">
-              <a href="javascript:void(0);">
-                <i class="fas fa-folder-tree"></i><span>Prompts</span>
-              </a>
-            </li>
-
-            <!-- User-visible My Prompts (above Logout) -->
-            <li data-page="my-prompts">
-              <a href="javascript:void(0);">
-                <i class="fas fa-note-sticky"></i><span>My Prompts</span>
-              </a>
-            </li>
-
-            <!-- Logout -->
-            <li>
-              <a href="javascript:void(0);" onclick="logout();">
-                <i class="fas fa-right-from-bracket"></i><span>Logout</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-
-        <div class="profile">
-          <div class="avatar">
-            <img
-              src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80"
-              alt="Profile">
-          </div>
-          <div class="user-info">
-            <h3 id="profile-name">User</h3>
-            <p id="profile-role">Role</p>
-          </div>
-        </div>
-      </aside>
-
-      <!-- ========================= MAIN CONTENT ========================= -->
-      <main class="content">
-        <header id="main-header">
-          <h1>Welcome back, <span id="welcome-name">User</span></h1>
-          <p>Here’s an overview of your account and system activity.</p>
-        </header>
-
-        <!-- ========== HOME PAGE ========== -->
-        <section id="page-home" class="page active">
-          <div class="card-container">
-            <div class="card">
-              <div class="card-icon">
-                <i class="fas fa-users"></i>
-              </div>
-              <div class="card-info">
-                <h3 id="card-total-users">0</h3>
-                <p>Total Users</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-icon">
-                <i class="fas fa-clock"></i>
-              </div>
-              <div class="card-info">
-                <h3 id="card-last-login">-</h3>
-                <p>Last Login</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-icon">
-                <i class="fas fa-key"></i>
-              </div>
-              <div class="card-info">
-                <h3 id="card-today-creds">-</h3>
-                <p>Today’s Credentials</p>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-icon">
-                <i class="fas fa-list"></i>
-              </div>
-              <div class="card-info">
-                <h3 id="card-log-count">0</h3>
-                <p>Login Logs Count</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ========== DAILY CREDENTIALS PAGE ========== -->
-        <section id="page-creds" class="page">
-          <h2>Today’s Credentials</h2>
-          <p style="opacity:0.8;font-size:0.95rem;">
-            These rotate daily and are stored locally in your browser.
-          </p>
-
-          <div class="card" style="margin-top:20px;max-width:420px;">
-            <div class="card-icon">
-              <i class="fas fa-user-lock"></i>
-            </div>
-            <div class="card-info">
-              <h3 id="today-username">-</h3>
-              <p>Username</p>
-              <h3 id="today-password" style="margin-top:10px;">-</h3>
-              <p>Password</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- ========== HISTORY PAGE ========== -->
-        <section id="page-history" class="page">
-          <h2>Past Daily Credentials</h2>
-          <p style="opacity:0.8;font-size:0.95rem;">
-            History of generated daily usernames and passwords.
-          </p>
-          <div class="table-wrapper">
-            <ul id="history-list"></ul>
-          </div>
-        </section>
-
-        <!-- ========== MANAGE USERS PAGE (ADMIN ONLY) ========== -->
-        <section id="page-users" class="page">
-          <h2>Manage Users</h2>
-          <form onsubmit="event.preventDefault(); addUser();">
-            <input id="new-username" placeholder="Username">
-            <input id="new-password" placeholder="Password">
-            <input id="new-displayname" placeholder="Display Name">
-            <input id="new-role" placeholder="Role">
-            <button type="submit">Add User</button>
-          </form>
-
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>Username</th>
-                  <th>Display Name</th>
-                  <th>Role</th>
-                  <th>Password</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="users-table-body"></tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- ========== LOGIN LOGS PAGE (ADMIN ONLY) ========== -->
-        <section id="page-logs" class="page">
-          <h2>Login Logs</h2>
-          <p style="opacity:0.8;font-size:0.95rem;">
-            Stored locally: username, display name, time, browser, OS, device.
-          </p>
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>Username</th>
-                  <th>Display Name</th>
-                  <th>Date & Time</th>
-                  <th>Browser</th>
-                  <th>OS</th>
-                  <th>Device</th>
-                </tr>
-              </thead>
-              <tbody id="logs-table-body"></tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- ========== PROMPTS PAGE (ADMIN) ========== -->
-        <section id="page-prompts" class="page">
-          <h2>Prompts (Admin)</h2>
-          <p style="opacity:0.8;font-size:0.95rem;">
-            Create sections and sub‑sections of prompts for each user.
-          </p>
-
-          <div class="prompts-admin-controls">
-            <label for="prompt-user-select">Select User:</label>
-            <select id="prompt-user-select"></select>
-            <button type="button" onclick="addPromptSection()">Add Section</button>
-          </div>
-
-          <div id="prompt-sections" class="prompt-sections-container">
-            <!-- Sections + mini‑cards will be rendered here -->
-          </div>
-        </section>
-
-        <!-- ========== MY PROMPTS PAGE (USER VIEW) ========== -->
-        <section id="page-my-prompts" class="page">
-          <h2>My Prompts</h2>
-          <p style="opacity:0.8;font-size:0.95rem;">
-            These are your personal sections and sub‑sections, managed by the admin.
-          </p>
-
-          <div id="my-prompts-container" class="prompt-sections-container">
-            <!-- User’s own sections + mini‑cards will be rendered here -->
-          </div>
-        </section>
-
-      </main>
-    </div>
-  </div>
-
-  <!-- PART 3/4 + 4/4 (JAVASCRIPT) WILL GO INSIDE THIS SCRIPT TAG -->
-  <script>
-  // PART 3/4 & 4/4: JAVASCRIPT WILL BE PASTED HERE
-  </script>
-</body>
-</html>
-/* ========================= THEME VARIABLES ========================= */
+<style>
 :root {
   --primary-color: #0066ff;
-  --bg-gradient-1: #2a2a72;
-  --bg-gradient-2: #009ffd;
   --sidebar-width: 280px;
   --sidebar-collapsed-width: 80px;
   --transition-speed: 0.3s;
-
-  --card-bg: rgba(255, 255, 255, 0.1);
-  --card-border: rgba(255, 255, 255, 0.18);
-  --text-color: #ffffff;
-  --muted-text: rgba(255, 255, 255, 0.8);
 }
 
-/* ========================= GLOBAL ========================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* GLOBAL */
 body {
   font-family: 'Montserrat', sans-serif;
-  background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 74%);
+  background: linear-gradient(135deg, #2a2a72 0%, #009ffd 74%);
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-color);
+  color: #fff;
 }
 
-/* Hide/Show helper */
+/* HIDE/SHOW */
 .hidden {
   display: none !important;
 }
 
-/* ========================= LOGIN SCREEN ========================= */
+/* LOGIN SCREEN */
 #login-screen {
   position: relative;
   width: 100%;
@@ -340,14 +55,14 @@ body {
 }
 
 .login-form {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255,255,255,0.15);
   padding: 3em;
   height: 320px;
   border-radius: 20px;
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-left: 1px solid rgba(255,255,255,0.3);
+  border-top: 1px solid rgba(255,255,255,0.3);
   backdrop-filter: blur(10px);
-  box-shadow: 20px 20px 40px -6px rgba(0, 0, 0, 0.4);
+  box-shadow: 20px 20px 40px -6px rgba(0,0,0,0.4);
   text-align: center;
   position: relative;
   transition: all 0.2s ease-in-out;
@@ -360,31 +75,35 @@ body {
   font-size: 1.4rem;
   margin-top: 0;
   margin-bottom: 40px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
 }
 
 .login-form input {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255,255,255,0.1);
   width: 200px;
   padding: 1em;
   margin-bottom: 2em;
   border: none;
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-left: 1px solid rgba(255,255,255,0.3);
+  border-top: 1px solid rgba(255,255,255,0.3);
   border-radius: 5000px;
   backdrop-filter: blur(5px);
-  box-shadow: 4px 4px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 4px 4px 60px rgba(0,0,0,0.3);
   color: #fff;
   font-family: Montserrat, sans-serif;
   font-weight: 500;
   transition: all 0.2s ease-in-out;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
 }
 
-.login-form input:hover,
+.login-form input:hover {
+  background: rgba(255,255,255,0.2);
+  box-shadow: 4px 4px 60px 8px rgba(0,0,0,0.3);
+}
+
 .login-form input:focus {
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.3);
+  background: rgba(255,255,255,0.2);
+  box-shadow: 4px 4px 60px 8px rgba(0,0,0,0.3);
   outline: none;
 }
 
@@ -393,11 +112,11 @@ body {
   width: 150px;
   font-size: 1rem;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255,255,255,0.25);
 }
 
 .login-form input[type="button"]:active {
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(255,255,255,0.35);
 }
 
 ::placeholder {
@@ -405,17 +124,16 @@ body {
   font-weight: 400;
   color: #fff;
   opacity: 0.9;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
 }
 
-/* Floating glass drops */
 .drop {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255,255,255,0.15);
   backdrop-filter: blur(10px);
   border-radius: 10px;
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 10px 10px 60px -8px rgba(0, 0, 0, 0.3);
+  border-left: 1px solid rgba(255,255,255,0.3);
+  border-top: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 10px 10px 60px -8px rgba(0,0,0,0.3);
   position: absolute;
   transition: all 0.2s ease;
 }
@@ -426,7 +144,7 @@ body {
 .drop-4 { height: 120px; width: 120px; top: -60px; right: -60px; }
 .drop-5 { height: 60px; width: 60px; bottom: 170px; left: 90px; z-index: -1; }
 
-/* ========================= APP CONTAINER ========================= */
+/* APP CONTAINER (DASHBOARD) */
 #app {
   width: 100%;
   height: 100vh;
@@ -448,7 +166,7 @@ body {
   overflow: hidden;
 }
 
-/* ========================= SIDEBAR ========================= */
+/* SIDEBAR */
 .sidebar {
   width: var(--sidebar-width);
   height: 100%;
@@ -542,7 +260,7 @@ body {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
 }
 
-/* ========================= PROFILE ========================= */
+/* PROFILE */
 .profile {
   margin-top: auto;
   display: flex;
@@ -579,7 +297,7 @@ body {
   opacity: 0.8;
 }
 
-/* ========================= CONTENT ========================= */
+/* CONTENT */
 .content {
   flex: 1;
   padding: 40px;
@@ -588,14 +306,6 @@ body {
 
 .content header {
   margin-bottom: 30px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: 0.8s ease;
-}
-
-.content header.welcome-animate {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .content header h1 {
@@ -609,7 +319,7 @@ body {
   opacity: 0.8;
 }
 
-/* ========================= CARDS ========================= */
+/* CARDS */
 .card-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -618,22 +328,15 @@ body {
 }
 
 .card {
-  background: var(--card-bg);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 24px;
   display: flex;
   align-items: center;
-  border: 1px solid var(--card-border);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.4s ease, transform 0.4s ease;
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.card.card-animate {
-  opacity: 1;
-  transform: translateY(0);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
@@ -667,7 +370,7 @@ body {
   opacity: 0.8;
 }
 
-/* ========================= PAGES ========================= */
+/* PAGES */
 .page {
   display: none;
 }
@@ -676,13 +379,13 @@ body {
   display: block;
 }
 
-/* ========================= TABLES ========================= */
+/* SIMPLE TABLES */
 .table-wrapper {
   margin-top: 20px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255,255,255,0.08);
   border-radius: 16px;
   padding: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255,255,255,0.15);
   overflow-x: auto;
 }
 
@@ -694,15 +397,15 @@ table {
 
 th, td {
   padding: 8px 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(255,255,255,0.15);
   text-align: left;
 }
 
 th {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255,255,255,0.08);
 }
 
-/* Forms in pages */
+/* FORMS IN PAGES */
 .page form input,
 .page form button {
   margin: 6px 4px;
@@ -713,7 +416,7 @@ th {
 }
 
 .page form input {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255,255,255,0.1);
   color: #fff;
 }
 
@@ -723,7 +426,7 @@ th {
   cursor: pointer;
 }
 
-/* History list */
+/* HISTORY LIST */
 #history-list {
   list-style: none;
   margin-top: 16px;
@@ -733,132 +436,11 @@ th {
 
 #history-list li {
   padding: 6px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid rgba(255,255,255,0.15);
   font-size: 0.9rem;
 }
 
-/* ========================= PROMPTS (ADMIN + USER) ========================= */
-.prompts-admin-controls {
-  margin-top: 16px;
-  margin-bottom: 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
-
-.prompts-admin-controls label {
-  font-size: 0.9rem;
-  opacity: 0.9;
-}
-
-.prompts-admin-controls select {
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: none;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  font-family: inherit;
-}
-
-.prompts-admin-controls button {
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: none;
-  background: var(--primary-color);
-  color: #fff;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-/* Sections container */
-.prompt-sections-container {
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* Section card */
-.prompt-section-card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 18px;
-  padding: 16px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-}
-
-.prompt-section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.prompt-section-title {
-  font-weight: 600;
-  font-size: 1rem;
-}
-
-.prompt-section-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.prompt-section-actions button {
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: none;
-  font-size: 0.8rem;
-  cursor: pointer;
-  background: rgba(255, 255, 255, 0.18);
-  color: #fff;
-}
-
-/* Sub-section mini-cards */
-.prompt-subsections {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.prompt-sub-card {
-  background: rgba(255, 255, 255, 0.16);
-  border-radius: 14px;
-  padding: 8px 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
-  font-size: 0.85rem;
-}
-
-.prompt-sub-card-icon {
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  background: var(--primary-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-}
-
-.prompt-sub-card-text {
-  max-width: 220px;
-  word-wrap: break-word;
-}
-
-.prompt-sub-card-delete {
-  border: none;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.8);
-  cursor: pointer;
-  font-size: 0.8rem;
-}
-
-/* ========================= RESPONSIVE ========================= */
+/* RESPONSIVE */
 @media (max-width: 1024px) {
   .sidebar {
     width: var(--sidebar-collapsed-width);
@@ -887,15 +469,219 @@ th {
     grid-template-columns: 1fr;
   }
 }
-// ========================= CONSTANTS & GLOBALS =========================
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-container">
+    <form class="login-form" onsubmit="return false;">
+      <p>Welcome</p>
+      <input id="login-username" type="text" placeholder="Username"><br>
+      <input id="login-password" type="password" placeholder="Password"><br>
+      <input type="button" value="Sign in" onclick="handleLogin()"><br>
+    </form>
+
+    <div class="drops">
+      <div class="drop drop-1"></div>
+      <div class="drop drop-2"></div>
+      <div class="drop drop-3"></div>
+      <div class="drop drop-4"></div>
+      <div class="drop drop-5"></div>
+    </div>
+  </div>
+</div>
+
+<!-- APP (DASHBOARD) -->
+<div id="app" class="hidden">
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="logo">
+        <i class="fab fa-apple"></i>
+      </div>
+      <nav class="menu">
+        <ul>
+          <li class="active" data-page="home">
+            <a href="javascript:void(0);">
+              <i class="fas fa-home"></i><span>Home</span>
+            </a>
+          </li>
+          <li data-page="creds">
+            <a href="javascript:void(0);">
+              <i class="fas fa-key"></i><span>Daily Credentials</span>
+            </a>
+          </li>
+          <li data-page="history">
+            <a href="javascript:void(0);">
+              <i class="fas fa-clock-rotate-left"></i><span>History</span>
+            </a>
+          </li>
+          <li class="admin-only" data-page="users">
+            <a href="javascript:void(0);">
+              <i class="fas fa-users-cog"></i><span>Manage Users</span>
+            </a>
+          </li>
+          <li class="admin-only" data-page="logs">
+            <a href="javascript:void(0);">
+              <i class="fas fa-list"></i><span>Login Logs</span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0);" onclick="logout();">
+              <i class="fas fa-right-from-bracket"></i><span>Logout</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="profile">
+        <div class="avatar">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80" alt="Profile">
+        </div>
+        <div class="user-info">
+          <h3 id="profile-name">User</h3>
+          <p id="profile-role">Role</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header>
+        <h1>Welcome back, <span id="welcome-name">User</span></h1>
+        <p>Here’s an overview of your account and system activity.</p>
+      </header>
+
+      <!-- HOME PAGE -->
+      <section id="page-home" class="page active">
+        <div class="card-container">
+          <div class="card">
+            <div class="card-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="card-info">
+              <h3 id="card-total-users">0</h3>
+              <p>Total Users</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="card-info">
+              <h3 id="card-last-login">—</h3>
+              <p>Last Login</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">
+              <i class="fas fa-key"></i>
+            </div>
+            <div class="card-info">
+              <h3 id="card-today-creds">—</h3>
+              <p>Today’s Credentials</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">
+              <i class="fas fa-list"></i>
+            </div>
+            <div class="card-info">
+              <h3 id="card-log-count">0</h3>
+              <p>Login Logs Count</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DAILY CREDENTIALS PAGE -->
+      <section id="page-creds" class="page">
+        <h2>Today’s Credentials</h2>
+        <p style="opacity:0.8;font-size:0.95rem;">These rotate daily and are stored locally in your browser.</p>
+        <div class="card" style="margin-top:20px;max-width:420px;">
+          <div class="card-icon">
+            <i class="fas fa-user-lock"></i>
+          </div>
+          <div class="card-info">
+            <h3 id="today-username">—</h3>
+            <p>Username</p>
+            <h3 id="today-password" style="margin-top:10px;">—</h3>
+            <p>Password</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- HISTORY PAGE -->
+      <section id="page-history" class="page">
+        <h2>Past Daily Credentials</h2>
+        <p style="opacity:0.8;font-size:0.95rem;">History of generated daily usernames and passwords.</p>
+        <div class="table-wrapper">
+          <ul id="history-list"></ul>
+        </div>
+      </section>
+
+      <!-- MANAGE USERS PAGE (ADMIN ONLY) -->
+      <section id="page-users" class="page">
+        <h2>Manage Users</h2>
+        <form onsubmit="event.preventDefault(); addUser();">
+          <input id="new-username" placeholder="Username">
+          <input id="new-password" placeholder="Password">
+          <input id="new-displayname" placeholder="Display Name">
+          <input id="new-role" placeholder="Role">
+          <button type="submit">Add User</button>
+        </form>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Display Name</th>
+                <th>Role</th>
+                <th>Password</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- LOGIN LOGS PAGE (ADMIN ONLY) -->
+      <section id="page-logs" class="page">
+        <h2>Login Logs</h2>
+        <p style="opacity:0.8;font-size:0.95rem;">Stored locally: username, display name, time, browser, OS, device.</p>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Display Name</th>
+                <th>Date & Time</th>
+                <th>Browser</th>
+                <th>OS</th>
+                <th>Device</th>
+              </tr>
+            </thead>
+            <tbody id="logs-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
 const ADMIN_USERNAME = "admin";
 const ADMIN_PASSWORD = "Waheguru@1984";
 
 let currentUser = null;
 
-// ========================= INIT APP =========================
+// INIT
 function initApp() {
-  let users = JSON.parse(localStorage.getItem("users") || "[]");
+  let users = JSON.parse(localStorage.getItem("users"));
   if (!Array.isArray(users)) users = [];
 
   // Ensure default admin exists
@@ -908,6 +694,7 @@ function initApp() {
       role: "Admin"
     });
   }
+
   localStorage.setItem("users", JSON.stringify(users));
 
   if (!localStorage.getItem("loginLogs")) {
@@ -916,33 +703,32 @@ function initApp() {
   if (!localStorage.getItem("dailyCreds")) {
     localStorage.setItem("dailyCreds", JSON.stringify({}));
   }
-  if (!localStorage.getItem("prompts")) {
-    localStorage.setItem("prompts", JSON.stringify({}));
-  }
 }
 initApp();
 
-// ========================= LOGIN =========================
+// LOGIN
 function handleLogin() {
   const u = document.getElementById("login-username").value.trim();
   const p = document.getElementById("login-password").value;
 
-  const users = JSON.parse(localStorage.getItem("users") || "[]");
+  const users = JSON.parse(localStorage.getItem("users")) || [];
   const match = users.find(user => user.username === u && user.password === p);
 
   if (!match) {
     alert("Incorrect username or password");
     return;
   }
+
   currentUser = match;
   logLogin(match);
   enterApp();
 }
 
-// ========================= LOG LOGIN =========================
+// LOG LOGIN
 function logLogin(user) {
-  const logs = JSON.parse(localStorage.getItem("loginLogs") || "[]");
+  const logs = JSON.parse(localStorage.getItem("loginLogs")) || [];
   const now = new Date();
+
   logs.push({
     username: user.username,
     displayName: user.displayName || "",
@@ -951,48 +737,35 @@ function logLogin(user) {
     os: navigator.platform,
     device: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "Desktop"
   });
+
   localStorage.setItem("loginLogs", JSON.stringify(logs));
 }
 
-// ========================= ENTER APP =========================
+// ENTER APP
 function enterApp() {
   document.getElementById("login-screen").classList.add("hidden");
   document.getElementById("app").classList.remove("hidden");
 
-  document.getElementById("profile-name").textContent =
-    currentUser.displayName || currentUser.username;
-  document.getElementById("profile-role").textContent =
-    currentUser.role || "User";
-  document.getElementById("welcome-name").textContent =
-    currentUser.displayName || currentUser.username;
+  document.getElementById("profile-name").textContent = currentUser.displayName || currentUser.username;
+  document.getElementById("profile-role").textContent = currentUser.role || "User";
+  document.getElementById("welcome-name").textContent = currentUser.displayName || currentUser.username;
 
   // Show/hide admin-only items
-  const isAdmin = currentUser.role === "Admin";
+  const isAdmin = (currentUser.role === "Admin");
   document.querySelectorAll(".admin-only").forEach(el => {
     el.style.display = isAdmin ? "block" : "none";
   });
-
-  // Animate header + cards
-  const header = document.getElementById("main-header");
-  header.classList.add("welcome-animate");
-  setTimeout(() => {
-    document.querySelectorAll(".card").forEach((card, idx) => {
-      setTimeout(() => card.classList.add("card-animate"), idx * 80);
-    });
-  }, 200);
 
   generateDailyCredentials();
   updateHomeCards();
   renderUsers();
   renderLogs();
   renderHistory();
+
   setupMenu();
-  renderPromptUsers();      // for admin prompts page
-  renderPromptSections();   // initial render
-  renderUserPrompts();      // for My Prompts page
 }
 
-// ========================= MENU =========================
+// MENU
 function setupMenu() {
   const items = document.querySelectorAll(".menu li[data-page]");
   items.forEach(li => {
@@ -1020,80 +793,74 @@ function showPage(pageName) {
     renderUsers();
   } else if (pageName === "logs") {
     renderLogs();
-  } else if (pageName === "prompts") {
-    renderPromptUsers();
-    renderPromptSections();
-  } else if (pageName === "my-prompts") {
-    renderUserPrompts();
   }
 }
 
-// ========================= DAILY CREDENTIALS =========================
+// DAILY CREDENTIALS
 function randomString(len) {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let out = "";
-  for (let i = 0; i < len; i++) {
-    out += chars[Math.floor(Math.random() * chars.length)];
-  }
+  for (let i = 0; i < len; i++) out += chars[Math.floor(Math.random() * chars.length)];
   return out;
 }
 
 function generateDailyCredentials() {
   const today = new Date().toLocaleDateString();
-  const saved = JSON.parse(localStorage.getItem("dailyCreds") || "{}");
+  const saved = JSON.parse(localStorage.getItem("dailyCreds")) || {};
+
   if (!saved[today]) {
     const username = randomString(6);
     const password = randomString(8);
     saved[today] = { username, password };
     localStorage.setItem("dailyCreds", JSON.stringify(saved));
   }
+
   const creds = saved[today];
   document.getElementById("today-username").textContent = creds.username;
   document.getElementById("today-password").textContent = creds.password;
 }
 
-// ========================= HISTORY =========================
+// HISTORY
 function renderHistory() {
-  const saved = JSON.parse(localStorage.getItem("dailyCreds") || "{}");
+  const saved = JSON.parse(localStorage.getItem("dailyCreds")) || {};
   const list = document.getElementById("history-list");
   list.innerHTML = "";
 
-  Object.keys(saved)
-    .sort()
-    .forEach(date => {
-      const li = document.createElement("li");
-      li.textContent = `${date} -> ${saved[date].username} / ${saved[date].password}`;
-      list.appendChild(li);
-    });
+  Object.keys(saved).sort().forEach(date => {
+    const li = document.createElement("li");
+    li.textContent = `${date} → ${saved[date].username} / ${saved[date].password}`;
+    list.appendChild(li);
+  });
 }
 
-// ========================= HOME CARDS =========================
+// HOME CARDS
 function updateHomeCards() {
-  const users = JSON.parse(localStorage.getItem("users") || "[]");
-  const logs = JSON.parse(localStorage.getItem("loginLogs") || "[]");
-  const daily = JSON.parse(localStorage.getItem("dailyCreds") || "{}");
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  const logs = JSON.parse(localStorage.getItem("loginLogs")) || [];
+  const daily = JSON.parse(localStorage.getItem("dailyCreds")) || {};
   const today = new Date().toLocaleDateString();
 
   document.getElementById("card-total-users").textContent = users.length.toString();
   document.getElementById("card-log-count").textContent = logs.length.toString();
 
-  const lastLog = logs.length ? logs[logs.length - 1].datetime : "-";
+  const lastLog = logs.length ? logs[logs.length - 1].datetime : "—";
   document.getElementById("card-last-login").textContent = lastLog;
 
   if (daily[today]) {
     document.getElementById("card-today-creds").textContent =
       `${daily[today].username} / ${daily[today].password}`;
   } else {
-    document.getElementById("card-today-creds").textContent = "-";
+    document.getElementById("card-today-creds").textContent = "—";
   }
 }
 
-// ========================= USERS (ADMIN) =========================
+// USERS (ADMIN)
 function addUser() {
   if (!currentUser || currentUser.role !== "Admin") {
     alert("Only admin can add users.");
     return;
   }
+
   const username = document.getElementById("new-username").value.trim();
   const password = document.getElementById("new-password").value;
   const displayName = document.getElementById("new-displayname").value.trim();
@@ -1103,7 +870,8 @@ function addUser() {
     alert("Username and password are required.");
     return;
   }
-  let users = JSON.parse(localStorage.getItem("users") || "[]");
+
+  let users = JSON.parse(localStorage.getItem("users")) || [];
   if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
     alert("User already exists.");
     return;
@@ -1125,19 +893,20 @@ function addUser() {
 
   renderUsers();
   updateHomeCards();
-  renderPromptUsers(); // update prompts user list
 }
 
 function renderUsers() {
   if (!currentUser || currentUser.role !== "Admin") return;
 
-  const users = JSON.parse(localStorage.getItem("users") || "[]");
+  const users = JSON.parse(localStorage.getItem("users")) || [];
   const tbody = document.getElementById("users-table-body");
   tbody.innerHTML = "";
 
   users.forEach(u => {
     const tr = document.createElement("tr");
+
     const isAdminUser = (u.username === ADMIN_USERNAME);
+
     tr.innerHTML = `
       <td>${u.username}</td>
       <td>${u.displayName || ""}</td>
@@ -1158,32 +927,26 @@ function deleteUser(username) {
     alert("You cannot delete the default admin user.");
     return;
   }
-  let users = JSON.parse(localStorage.getItem("users") || "[]");
+
+  let users = JSON.parse(localStorage.getItem("users")) || [];
   users = users.filter(u => u.username !== username);
   localStorage.setItem("users", JSON.stringify(users));
-
-  // Also remove prompts for that user
-  let prompts = JSON.parse(localStorage.getItem("prompts") || "{}");
-  if (prompts[username]) {
-    delete prompts[username];
-    localStorage.setItem("prompts", JSON.stringify(prompts));
-  }
-
   renderUsers();
   updateHomeCards();
-  renderPromptUsers();
 }
 
 function editUser(username) {
   if (!currentUser || currentUser.role !== "Admin") return;
 
-  let users = JSON.parse(localStorage.getItem("users") || "[]");
+  let users = JSON.parse(localStorage.getItem("users")) || [];
   const idx = users.findIndex(u => u.username === username);
   if (idx === -1) return;
+
   const user = users[idx];
 
   const newDisplayName = prompt("Display Name:", user.displayName || "");
   if (newDisplayName === null) return;
+
   const newRole = prompt("Role:", user.role || "");
   if (newRole === null) return;
 
@@ -1201,14 +964,13 @@ function editUser(username) {
   }
 
   renderUsers();
-  renderPromptUsers();
 }
 
-// ========================= LOGS (ADMIN) =========================
+// LOGS (ADMIN)
 function renderLogs() {
   if (!currentUser || currentUser.role !== "Admin") return;
 
-  const logs = JSON.parse(localStorage.getItem("loginLogs") || "[]");
+  const logs = JSON.parse(localStorage.getItem("loginLogs")) || [];
   const tbody = document.getElementById("logs-table-body");
   tbody.innerHTML = "";
 
@@ -1226,7 +988,7 @@ function renderLogs() {
   });
 }
 
-// ========================= LOGOUT =========================
+// LOGOUT
 function logout() {
   currentUser = null;
   document.getElementById("app").classList.add("hidden");
@@ -1234,181 +996,8 @@ function logout() {
   document.getElementById("login-username").value = "";
   document.getElementById("login-password").value = "";
 }
-// ========================= PROMPTS SYSTEM =========================
+</script>
 
-// Load prompts object
-function loadPrompts() {
-  return JSON.parse(localStorage.getItem("prompts") || "{}");
-}
+</body>
+</html>
 
-// Save prompts object
-function savePrompts(prompts) {
-  localStorage.setItem("prompts", JSON.stringify(prompts));
-}
-
-// ========================= ADMIN: USER DROPDOWN =========================
-function renderPromptUsers() {
-  if (!currentUser || currentUser.role !== "Admin") return;
-
-  const users = JSON.parse(localStorage.getItem("users") || "[]");
-  const select = document.getElementById("prompt-user-select");
-  select.innerHTML = "";
-
-  users.forEach(u => {
-    const opt = document.createElement("option");
-    opt.value = u.username;
-    opt.textContent = `${u.displayName || u.username} (${u.username})`;
-    select.appendChild(opt);
-  });
-}
-
-// ========================= ADMIN: RENDER SECTIONS =========================
-function renderPromptSections() {
-  if (!currentUser || currentUser.role !== "Admin") return;
-
-  const container = document.getElementById("prompt-sections");
-  const selectedUser = document.getElementById("prompt-user-select").value;
-  const prompts = loadPrompts();
-
-  container.innerHTML = "";
-
-  if (!prompts[selectedUser]) {
-    prompts[selectedUser] = {};
-    savePrompts(prompts);
-  }
-
-  const sections = prompts[selectedUser];
-
-  Object.keys(sections).forEach(sectionName => {
-    const card = document.createElement("div");
-    card.className = "prompt-section-card";
-
-    card.innerHTML = `
-      <div class="prompt-section-header">
-        <div class="prompt-section-title">${sectionName}</div>
-        <div class="prompt-section-actions">
-          <button onclick="addPromptSubsection('${sectionName}')">Add Sub</button>
-          <button onclick="deletePromptSection('${sectionName}')">Delete</button>
-        </div>
-      </div>
-      <div class="prompt-subsections" id="subs-${sectionName}"></div>
-    `;
-
-    container.appendChild(card);
-
-    // Render sub-sections
-    const subsContainer = document.getElementById(`subs-${sectionName}`);
-    sections[sectionName].forEach(sub => {
-      const subCard = document.createElement("div");
-      subCard.className = "prompt-sub-card";
-
-      subCard.innerHTML = `
-        <div class="prompt-sub-card-icon"><i class="fas fa-circle"></i></div>
-        <div class="prompt-sub-card-text">${sub}</div>
-        <button class="prompt-sub-card-delete" onclick="deletePromptSubsection('${sectionName}', '${sub}')">
-          <i class="fas fa-times"></i>
-        </button>
-      `;
-
-      subsContainer.appendChild(subCard);
-    });
-  });
-}
-
-// ========================= ADMIN: ADD SECTION =========================
-function addPromptSection() {
-  const selectedUser = document.getElementById("prompt-user-select").value;
-  const prompts = loadPrompts();
-
-  const name = prompt("Section name:");
-  if (!name) return;
-
-  if (!prompts[selectedUser]) prompts[selectedUser] = {};
-  if (prompts[selectedUser][name]) {
-    alert("Section already exists.");
-    return;
-  }
-
-  prompts[selectedUser][name] = [];
-  savePrompts(prompts);
-  renderPromptSections();
-}
-
-// ========================= ADMIN: ADD SUB-SECTION =========================
-function addPromptSubsection(sectionName) {
-  const selectedUser = document.getElementById("prompt-user-select").value;
-  const prompts = loadPrompts();
-
-  const sub = prompt("Sub-section text:");
-  if (!sub) return;
-
-  prompts[selectedUser][sectionName].push(sub);
-  savePrompts(prompts);
-  renderPromptSections();
-}
-
-// ========================= ADMIN: DELETE SECTION =========================
-function deletePromptSection(sectionName) {
-  const selectedUser = document.getElementById("prompt-user-select").value;
-  const prompts = loadPrompts();
-
-  if (!confirm(`Delete section "${sectionName}"?`)) return;
-
-  delete prompts[selectedUser][sectionName];
-  savePrompts(prompts);
-  renderPromptSections();
-}
-
-// ========================= ADMIN: DELETE SUB-SECTION =========================
-function deletePromptSubsection(sectionName, subName) {
-  const selectedUser = document.getElementById("prompt-user-select").value;
-  const prompts = loadPrompts();
-
-  prompts[selectedUser][sectionName] =
-    prompts[selectedUser][sectionName].filter(s => s !== subName);
-
-  savePrompts(prompts);
-  renderPromptSections();
-}
-
-// ========================= USER VIEW: MY PROMPTS =========================
-function renderUserPrompts() {
-  if (!currentUser) return;
-
-  const container = document.getElementById("my-prompts-container");
-  const prompts = loadPrompts();
-  const username = currentUser.username;
-
-  container.innerHTML = "";
-
-  if (!prompts[username]) return;
-
-  const sections = prompts[username];
-
-  Object.keys(sections).forEach(sectionName => {
-    const card = document.createElement("div");
-    card.className = "prompt-section-card";
-
-    card.innerHTML = `
-      <div class="prompt-section-header">
-        <div class="prompt-section-title">${sectionName}</div>
-      </div>
-      <div class="prompt-subsections" id="my-subs-${sectionName}"></div>
-    `;
-
-    container.appendChild(card);
-
-    const subsContainer = document.getElementById(`my-subs-${sectionName}`);
-    sections[sectionName].forEach(sub => {
-      const subCard = document.createElement("div");
-      subCard.className = "prompt-sub-card";
-
-      subCard.innerHTML = `
-        <div class="prompt-sub-card-icon"><i class="fas fa-circle"></i></div>
-        <div class="prompt-sub-card-text">${sub}</div>
-      `;
-
-      subsContainer.appendChild(subCard);
-    });
-  });
-}
